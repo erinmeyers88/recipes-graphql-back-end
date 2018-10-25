@@ -13,7 +13,7 @@ const recipeSchema = new Schema({
     type: String,
     required: true
   },
-  category: {
+  categoryId: {
     type: String,
     required: true
   }

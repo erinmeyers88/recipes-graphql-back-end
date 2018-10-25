@@ -1,10 +1,11 @@
 import express from 'express';
+import cors from 'cors';
 import mongoose from 'mongoose';
 import graphqlHTTP from 'express-graphql';
 import schema from './graphql';
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 mongoose.connect('mongodb://test123:test123@ds131313.mlab.com:31313/recipes');
 const db = mongoose.connection;
@@ -17,7 +18,7 @@ app.get('/', (req, res) => {
 
 // GraphQL API endpoint
 
-app.use('/graphql', graphqlHTTP(() => ({
+app.use('/graphql', cors(), graphqlHTTP(() => ({
   schema,
   graphiql: true,
   pretty: true

@@ -1,13 +1,36 @@
 import {
-  GraphQLEnumType
+  GraphQLID, GraphQLInputObjectType, GraphQLNonNull, GraphQLObjectType, GraphQLString, GraphQLList
 } from 'graphql';
 
-export const CategoryType = new GraphQLEnumType({
+import {recipeType} from '../types/recipe';
+import RecipeModel from '../../models/recipe';
+
+export const categoryType = new GraphQLObjectType({
   name: 'Category',
-  values: {
-    SIDE: {value: 'side'},
-    MAIN: {value: 'main'},
-    DESSERT: {value: 'dessert'}
-  }
+  description: 'Category',
+  fields: () => ({
+    id: {
+      type: new GraphQLNonNull(GraphQLID)
+    },
+    name: {
+      type: GraphQLString
+    },
+    recipes: {
+      type: GraphQLList(recipeType),
+      resolve(category) {
+        const {id} = category;
+        return RecipeModel.find({categoryId: id}).exec();
+      }
+    }
+  })
 });
 
+export const categoryInputType = new GraphQLInputObjectType({
+  name: 'CategoryInput',
+  description: 'Category Post',
+  fields: () => ({
+    name: {
+      type: GraphQLString
+    }
+  })
+});

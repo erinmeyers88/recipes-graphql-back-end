@@ -6,13 +6,13 @@ import {
   GraphQLID
 } from 'graphql';
 
-import {CategoryType} from './category';
+import {categoryType} from './category';
 
 export const recipeType = new GraphQLObjectType({
   name: 'Recipe',
   description: 'Recipe',
   fields: () => ({
-    _id: {
+    id: {
       type: new GraphQLNonNull(GraphQLID)
     },
     title: {
@@ -24,8 +24,8 @@ export const recipeType = new GraphQLObjectType({
     instructions: {
       type: GraphQLString
     },
-    category: {
-      type: CategoryType
+    categoryId: {
+      type: GraphQLString
     }
   })
 });
@@ -43,8 +43,8 @@ export const recipeInputType = new GraphQLInputObjectType({
     instructions: {
       type: GraphQLString
     },
-    category: {
-      type: CategoryType
+    categoryId: {
+      type: GraphQLString
     }
   })
 });
